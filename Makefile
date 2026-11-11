@@ -1,9 +1,10 @@
 CXX = g++
-CXXFLAGS = -I allegro/include -I src -Wall -Wextra
+CXXFLAGS = -I allegro/include -I src -Wall -Wextra \
+# 	-g3 -Og
 
 LDFLAGS = -L allegro/lib
 
-LIBS = -lallegro -lallegro_image -lallegro_primitives -lallegro_audio
+LIBS = -lallegro -lallegro_image -lallegro_primitives -lallegro_audio -lallegro_acodec
 
 TARGET = src/main.exe
 
@@ -12,3 +13,6 @@ all:
 
 run:
 	$(TARGET)
+
+debug:
+	gdb -tui $(TARGET)

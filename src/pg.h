@@ -50,7 +50,7 @@ public:
     int fps_count_frames = 0;
     unsigned long long frames = 0;
 
-    int running;
+    bool running;
 
     Canvas() {
         al_init();
@@ -74,7 +74,7 @@ public:
         al_destroy_display(display);
         al_destroy_event_queue(event_queue);
         al_destroy_user_event_source(display_event_source);
-        al_destroy_event_queue(timer_queue);
+        al_destroy_event_queue(timer_queue);    
         al_destroy_timer(timer);
     }
 
@@ -111,7 +111,7 @@ public:
         al_set_window_title(display, t.c_str());
     }
 
-    int loop() {
+    bool loop() {
         ALLEGRO_EVENT event;
         al_get_keyboard_state(&keyboard_state);
         al_get_mouse_state(&mouse_state);
