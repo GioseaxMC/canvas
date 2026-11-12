@@ -16,12 +16,12 @@ int main(void) {
     Text text;
     Font font("assets/Tiny5Duo-Regular.ttf", 15);
 
-    Sprite sprite(Texture({"me.png", "you.jpg"}, {
+    Sprite sprite(Texture({"assets/me.png", "assets/you.jpg"}, {
         {.id=0, .pos={0,0}, .size={100,100}},
         {.id=1, .pos={0,10}, .size={100,100}},
     }), {20,20}, Collider(100,100));
 
-    Sprite object(Texture({"me.png", "you.jpg"}, {
+    Sprite object(Texture({"assets/me.png", "assets/you.jpg"}, {
         {.id=1, .pos={0,10}, .size={100,100}},
         {.id=0, .pos={0,0}, .size={100,100}},
     }), {400,400}, Collider(50));
@@ -63,6 +63,4 @@ int main(void) {
         object.draw();
         sprite.draw();
     }
-
-    cout << "eshit\n";
 }
