@@ -5,6 +5,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <vector>
 #include <thirdparty/linalg.h>
 #include <algorithm>
@@ -18,9 +20,17 @@
 #include "pg_colliders.cpp"
 #include "pg_textures.cpp"
 #include "pg_sprites.cpp"
+#include "pg_text.cpp"
+#include "pg_color.cpp"
 
 class Canvas {
 public:
+    
+    enum Button {
+        left = ALLEGRO_MOUSE_BUTTON_LEFT,
+        right = ALLEGRO_MOUSE_BUTTON_RIGHT,
+        middle = ALLEGRO_MOUSE_BUTTON_MIDDLE,
+    };
     
     ALLEGRO_DISPLAY* display;
     ALLEGRO_EVENT_SOURCE* display_event_source;
@@ -78,13 +88,13 @@ public:
         al_destroy_timer(timer);
     }
 
-    void init_window(int _fps=60, int _width=800, int _height=600, std::string _title="pgpp game", bool _resizable=1, std::string _icon="", int _full_screen=0) {
+    void init_window(int _width=800, int _height=600, std::string _title="pgpp game", bool _resizable=1, std::string _icon="", int _full_screen=0) {
         width = _width;
         height = _height;
         resizable = _resizable;
         icon = _icon;
         full_screen = _full_screen;
-        fps = _fps;
+        fps = 0;
         
 
         al_set_new_display_flags(
@@ -107,11 +117,24 @@ public:
         running = 1;
     }
 
+    void set_fps(int _fps) {
+        fps = _fps;
+        if (_fps) {
+            timer_queue = al_create_event_queue();
+            timer = al_create_timer(1.0 / fps);
+            al_register_event_source(
+                timer_queue,
+                al_get_timer_event_source(timer)
+            );
+            al_start_timer(timer);
+        }
+    }
+
     void set_title(std::string t) {
         al_set_window_title(display, t.c_str());
     }
 
-    bool loop() {
+    bool loop(Color bg_color = Color(255,255,255)) {
         ALLEGRO_EVENT event;
         al_get_keyboard_state(&keyboard_state);
         al_get_mouse_state(&mouse_state);
@@ -138,25 +161,26 @@ public:
             }
         }
 
-        ALLEGRO_EVENT timer_event;
-        al_wait_for_event(timer_queue, &timer_event);
-        double now = timer_event.any.timestamp;
-
-        delta = now - last_timer_timestamp;
-        last_timer_timestamp = now;
-
-        fps_count_frames++;
-        frames++;
-        fps_count_elapsed += delta;
-        
-        if (fps_count_elapsed >= 1.0) {
-            true_fps = fps_count_frames / fps_count_elapsed;
-            fps_count_frames = 0;
-            fps_count_elapsed = 0;
+        if (fps) {
+            ALLEGRO_EVENT timer_event;
+            al_wait_for_event(timer_queue, &timer_event);
+            double now = timer_event.any.timestamp;
+    
+            delta = now - last_timer_timestamp;
+            last_timer_timestamp = now;
+            frames++;
+            fps_count_elapsed += delta;
+            fps_count_frames++;
+            
+            if (fps_count_elapsed >= 1.0) {
+                true_fps = fps_count_frames / fps_count_elapsed;
+                fps_count_frames = 0;
+                fps_count_elapsed = 0;
+            }
         }
 
         al_flip_display();
-        al_clear_to_color(al_map_rgb(255,255,255));
+        al_clear_to_color(bg_color.as_allegro_color());
         return running;
     }
 
@@ -172,12 +196,12 @@ public:
         return clicked_keys[key];
     }
     
-    inline bool mouse_down(int butt=ALLEGRO_MOUSE_BUTTON_LEFT) {
+    inline bool mouse_down(Button butt=Button::left) {
         return mouse_state.buttons & butt;
     }
 
-    inline bool mouse_clicked(int button=ALLEGRO_MOUSE_BUTTON_LEFT) {
-        return clicked_mouse_buttons[button];
+    inline bool mouse_clicked(Button butt=Button::left) {
+        return clicked_mouse_buttons[butt];
     }
 
     inline Vec2f mouse_position() {

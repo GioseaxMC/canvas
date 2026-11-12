@@ -8,7 +8,8 @@ int main(void) {
     using namespace std;
 
     Canvas c;
-    c.init_window(400);
+    c.init_window();
+    c.set_fps(20000);
 
     Sound sound;
     sound.set_music_volume(0.1);
@@ -16,6 +17,8 @@ int main(void) {
     sound.load_sound("assets/hithat.ogg", "hh");
     sound.play_music("somf");
 
+    Text text;
+    Font font("assets/Tiny5Duo-Regular.ttf", 15);
 
     Sprite sprite(Texture({"me.png", "you.jpg"}, {
         {.id=0, .pos={0,0}, .size={100,100}},
@@ -27,7 +30,7 @@ int main(void) {
         {.id=0, .pos={0,0}, .size={100,100}},
     }), {400,400}, Collider(50));
 
-    while (c.loop()) {
+    while (c.loop({20,20,20})) {
         sound.tick();
 
         sprite.position = c.mouse_position();
@@ -49,9 +52,17 @@ int main(void) {
         sprite.texture.set_frame(sprite.touching(object));
         object.texture.set_frame(object.touching(c.mouse_position()));
 
-        std::stringstream ss;
-        ss << "Game  -  FPS: " << c.get_fps() << "  -  B: " << (void*)sound.voice;
-        c.set_title(ss.str());
+        std::stringstream title_stream;
+        title_stream << "Game  -  FPS: " << c.get_fps() << "  -  B: " << (void*)sound.voice;
+        c.set_title(title_stream.str());
+
+        std::stringstream text_stream;
+        text_stream << "FPS: " << c.get_fps()
+                    << "B: " << (void*)sound.voice
+                    << "F: " << (void*)&text
+                    << "M: " << c.mouse_position().x << ", " << c.mouse_position().y;
+            
+        text.draw_multiline_text(text_stream.str(), font, {20,20}, 100);
 
         object.draw();
         sprite.draw();
