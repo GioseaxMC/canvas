@@ -8,13 +8,13 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <vector>
-#include <thirdparty/linalg.h>
 #include <algorithm>
 #include <cmath>
 #include <memory>
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
+#include "pg_linalg.cpp"
 #include "pg_sound.cpp"
 // #include "pg_bitmaps.cpp"
 #include "pg_colliders.cpp"

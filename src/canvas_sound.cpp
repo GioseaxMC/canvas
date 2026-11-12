@@ -1,12 +1,22 @@
-class Sound {
-    public:
+enum Playmode {
+    Loop,
+    Once,
+    LoopOnce,
+    BiDir,
+};
 
-    enum Playmode {
-        Loop = ALLEGRO_PLAYMODE_LOOP,
-        Once = ALLEGRO_PLAYMODE_ONCE,
-        LoopOnce = ALLEGRO_PLAYMODE_LOOP_ONCE,
-        BiDir = ALLEGRO_PLAYMODE_BIDIR,
-    };
+ALLEGRO_PLAYMODE _playmode_to_allegro(Playmode mode) {
+    switch(mode) {
+        case Playmode::Loop: return ALLEGRO_PLAYMODE_LOOP;
+        case Playmode::Once: return ALLEGRO_PLAYMODE_ONCE;
+        case Playmode::LoopOnce: return ALLEGRO_PLAYMODE_LOOP_ONCE;
+        case Playmode::BiDir: return ALLEGRO_PLAYMODE_BIDIR;
+        default: return ALLEGRO_PLAYMODE_ONCE;
+    }
+}
+
+class Sound {
+public:
 
     ALLEGRO_VOICE* voice;
     ALLEGRO_MIXER* main_mixer;
@@ -77,7 +87,7 @@ class Sound {
         ALLEGRO_SAMPLE_INSTANCE* spl = al_create_sample_instance(music[name]);
         al_set_sample_instance_gain(spl, gain);
         al_set_sample_instance_pan(spl, pan);
-        al_set_sample_instance_playmode(spl, (ALLEGRO_PLAYMODE)mode);
+        al_set_sample_instance_playmode(spl, _playmode_to_allegro(mode));
         al_set_sample_instance_speed(spl, speed);
         al_attach_sample_instance_to_mixer(spl, music_mixer);
         al_set_sample_instance_playing(spl, 1);
