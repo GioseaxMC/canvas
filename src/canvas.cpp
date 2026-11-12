@@ -117,13 +117,13 @@ public:
         al_register_event_source(event_queue, display_event_source);
         al_set_target_backbuffer(display);
         
-        timer_queue = al_create_event_queue();
-        timer = al_create_timer(1.0 / fps);
-        al_register_event_source(
-            timer_queue,
-            al_get_timer_event_source(timer)
-        );
-        al_start_timer(timer);
+        // timer_queue = al_create_event_queue();
+        // timer = al_create_timer(1.0 / fps);
+        // al_register_event_source(
+        //     timer_queue,
+        //     al_get_timer_event_source(timer)
+        // );
+        // al_start_timer(timer);
 
         running = 1;
     }
