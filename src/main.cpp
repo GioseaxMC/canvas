@@ -63,4 +63,6 @@ int main(void) {
         object.draw();
         sprite.draw();
     }
+
+    cout << "eshit\n";
 }

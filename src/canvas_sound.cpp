@@ -53,12 +53,14 @@ public:
     }
 
     ~Sound() {
-        al_destroy_voice(voice);
-        al_destroy_mixer(main_mixer);
-        al_destroy_mixer(music_mixer);
-        al_destroy_mixer(sfx_mixer);
+        // al_set_default_mixer(nullptr);
+        // al_set_default_voice(nullptr);
+
         al_destroy_event_queue(events);
-        al_uninstall_audio();
+        
+        al_destroy_mixer(sfx_mixer);
+        al_destroy_mixer(music_mixer);
+        al_destroy_mixer(main_mixer);
     }
 
     void load_sound(std::string fname, std::string name) {

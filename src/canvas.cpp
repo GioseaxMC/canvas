@@ -87,6 +87,7 @@ public:
     }
 
     ~Canvas() {
+        bitmapsArchive.bitmaps.clear();
         al_destroy_event_queue(event_queue);
         al_destroy_user_event_source(display_event_source);
         al_destroy_event_queue(timer_queue);    
