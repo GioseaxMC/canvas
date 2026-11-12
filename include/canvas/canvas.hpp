@@ -14,14 +14,14 @@
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
-#include <pg_libalg.hpp>
-#include <pg_sound.hpp>
-// #include <pg_bitmaps.hpp>
-#include <pg_colliders.hpp>
-#include <pg_textures.hpp>
-#include <pg_sprites.hpp>
-#include <pg_text.hpp>
-#include <pg_color.hpp>
+#include <canvas_libalg.hpp>
+#include <canvas_sound.hpp>
+// #include <canvas_bitmaps.hpp>
+#include <canvas_colliders.hpp>
+#include <canvas_textures.hpp>
+#include <canvas_sprites.hpp>
+#include <canvas_text.hpp>
+#include <canvas_color.hpp>
 
 class Canvas {
 public:

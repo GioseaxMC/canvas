@@ -14,14 +14,14 @@
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
-#include "pg_linalg.cpp"
-#include "pg_sound.cpp"
-// #include "pg_bitmaps.cpp"
-#include "pg_colliders.cpp"
-#include "pg_textures.cpp"
-#include "pg_sprites.cpp"
-#include "pg_text.cpp"
-#include "pg_color.cpp"
+#include "canvas_linalg.cpp"
+#include "canvas_sound.cpp"
+// #include "canvas_bitmaps.cpp"
+#include "canvas_colliders.cpp"
+#include "canvas_textures.cpp"
+#include "canvas_sprites.cpp"
+#include "canvas_text.cpp"
+#include "canvas_color.cpp"
 
 class Canvas {
 public:
@@ -148,7 +148,6 @@ public:
                     clicked_keys[event.keyboard.keycode] = 1;
                     if (clicked_keys[ALLEGRO_KEY_F11]) {
                         bool fs = al_get_display_flags(display) & ALLEGRO_FULLSCREEN_WINDOW;
-                        std::cout << fs << std::endl;
                         al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, !fs);
                     }
                 } break;
