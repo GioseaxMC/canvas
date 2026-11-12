@@ -2,7 +2,7 @@
 #include <sstream>
 #include <cassert>
 
-#include "pg.h"
+#include "pg.cpp"
 
 int main(void) {
     using namespace std;

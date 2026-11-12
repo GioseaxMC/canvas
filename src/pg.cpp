@@ -13,11 +13,11 @@
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
-#include "pg_sound.h"
-// #include "pg_bitmaps.h"
-#include "pg_colliders.h"
-#include "pg_textures.h"
-#include "pg_sprites.h"
+#include "pg_sound.cpp"
+// #include "pg_bitmaps.cpp"
+#include "pg_colliders.cpp"
+#include "pg_textures.cpp"
+#include "pg_sprites.cpp"
 
 class Canvas {
 public:
