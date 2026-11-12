@@ -5,7 +5,7 @@ int main(void) {
 
     Canvas c;
     c.init_window();
-    c.set_fps(20000);
+    c.set_fps(200);
 
     Sound sound;
     sound.set_music_volume(0.1);
