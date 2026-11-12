@@ -47,21 +47,34 @@ def git_root():
 
 def find_compiler(preference):
     compilers = {
-        "gcc": ("gcc", "g++"),
-        "clang": ("clang", "clang++"),
+        "gcc": [
+            ("gcc", "g++"),
+        ],
+        "clang": [
+            ("clang", "clang++"),
+            *[
+                (f"clang-{v}", f"clang++-{v}")
+                for v in range(20, 9, -1)
+            ],
+        ],
     }
 
     order = ["gcc", "clang"] if preference == "auto" else [preference]
 
-    for name in order:
-        cc, cxx = compilers[name]
-        cc_path = shutil.which(cc)
-        cxx_path = shutil.which(cxx)
+    for compiler in order:
+        for cc_name, cxx_name in compilers[compiler]:
+            cc_path = shutil.which(cc_name)
+            cxx_path = shutil.which(cxx_name)
 
-        if cc_path and cxx_path:
-            return name, Path(cc_path).resolve(), Path(cxx_path).resolve()
+            if cc_path and cxx_path:
+                print(f"Using {cc_name} / {cxx_name}")
+                return (
+                    compiler,
+                    Path(cc_path).resolve(),
+                    Path(cxx_path).resolve(),
+                )
 
-    raise RuntimeError(f"Compiler not found: {preference}")
+    raise RuntimeError(f"No complete compiler toolchain found: {preference}")
 
 
 def compiler_prefix(cxx):

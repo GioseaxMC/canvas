@@ -1,5 +1,5 @@
 struct BitmapDeleter {
-    void operator()(ALLEGRO_BITMAP* bitmap);
+    void operator()(ALLEGRO_BITMAP* bitmap) const;
 };
 
 typedef std::unique_ptr<ALLEGRO_BITMAP, BitmapDeleter> BitmapPtr;

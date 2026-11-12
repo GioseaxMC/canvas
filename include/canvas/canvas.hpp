@@ -7,21 +7,26 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <iostream>
+#include <sstream>
+#include <cassert>
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
-#include <canvas_libalg.hpp>
-#include <canvas_sound.hpp>
-// #include <canvas_bitmaps.hpp>
-#include <canvas_colliders.hpp>
-#include <canvas_textures.hpp>
-#include <canvas_sprites.hpp>
-#include <canvas_text.hpp>
-#include <canvas_color.hpp>
+#include <canvas/canvas_linalg.hpp>
+#include <canvas/canvas_sound.hpp>
+// #include <canvas/canvas_bitmaps.hpp>
+#include <canvas/canvas_colliders.hpp>
+#include <canvas/canvas_textures.hpp>
+#include <canvas/canvas_sprites.hpp>
+#include <canvas/canvas_text.hpp>
+#include <canvas/canvas_color.hpp>
 
 class Canvas {
 public:

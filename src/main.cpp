@@ -1,8 +1,4 @@
-#include <iostream>
-#include <sstream>
-#include <cassert>
-
-#include "pg.cpp"
+#include "canvas.cpp"
 
 int main(void) {
     using namespace std;

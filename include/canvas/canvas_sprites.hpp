@@ -8,7 +8,7 @@ public:
 
     Collider collider;
 
-    Sprite(Texture _texture, Vec2f _position={}, Collider _collider={}, float _rotation=0, float _scale=1) : texture(_texture);
+    Sprite(Texture _texture, Vec2f _position={}, Collider _collider={}, float _rotation=0, float _scale=1);
 
     bool touching(Sprite& other);
 

@@ -28,7 +28,8 @@ public:
         right = ALLEGRO_ALIGN_RIGHT,
     };
     
-    Text ();
+    Text();
+    ~Text();
 
     void draw_text(std::string text, DynamicFont& font, int size, Vec2f pos, ALLEGRO_COLOR color=al_map_rgb(0,0,0), Alignment flags=Alignment::left);
     

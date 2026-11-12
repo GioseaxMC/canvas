@@ -56,6 +56,11 @@ public:
         assert(ret && "Failed to load ttf addon");
     }
 
+    ~Text() {
+        al_shutdown_font_addon();
+        al_shutdown_ttf_addon();
+    }
+
     void draw_text(std::string text, DynamicFont& font, int size, Vec2f pos, ALLEGRO_COLOR color=al_map_rgb(0,0,0), Alignment flags=Alignment::left) {
         al_draw_text(font.get_with_size(size), color, pos.x, pos.y, flags, text.c_str());
     }

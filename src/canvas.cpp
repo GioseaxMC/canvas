@@ -7,16 +7,22 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <iostream>
+#include <sstream>
+#include <cassert>
 
 #define crash(error) do { printf("%s\n", error); exit(-1); } while (0)
 
+// #include "canvas_bitmaps.cpp"
+
 #include "canvas_linalg.cpp"
 #include "canvas_sound.cpp"
-// #include "canvas_bitmaps.cpp"
 #include "canvas_colliders.cpp"
 #include "canvas_textures.cpp"
 #include "canvas_sprites.cpp"
@@ -81,11 +87,15 @@ public:
     }
 
     ~Canvas() {
-        al_destroy_display(display);
         al_destroy_event_queue(event_queue);
         al_destroy_user_event_source(display_event_source);
         al_destroy_event_queue(timer_queue);    
         al_destroy_timer(timer);
+        al_uninstall_keyboard();
+        al_uninstall_mouse();
+        al_shutdown_image_addon();
+        al_shutdown_primitives_addon();
+        al_destroy_display(display);
     }
 
     void init_window(int _width=800, int _height=600, std::string _title="pgpp game", bool _resizable=1, std::string _icon="", int _full_screen=0) {
@@ -134,7 +144,7 @@ public:
         al_set_window_title(display, t.c_str());
     }
 
-    bool loop(Color bg_color = Color(255,255,255)) {
+    bool loop(Color bg_color=Color(255,255,255)) {
         ALLEGRO_EVENT event;
         al_get_keyboard_state(&keyboard_state);
         al_get_mouse_state(&mouse_state);

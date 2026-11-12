@@ -1,12 +1,13 @@
+enum Playmode {
+    Loop,
+    Once,
+    LoopOnce,
+    BiDir,
+};
+
 class Sound {
     public:
 
-    enum Playmode {
-        Loop = ALLEGRO_PLAYMODE_LOOP,
-        Once = ALLEGRO_PLAYMODE_ONCE,
-        LoopOnce = ALLEGRO_PLAYMODE_LOOP_ONCE,
-        BiDir = ALLEGRO_PLAYMODE_BIDIR,
-    };
 
     ALLEGRO_VOICE* voice;
     ALLEGRO_MIXER* main_mixer;
