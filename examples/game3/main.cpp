@@ -1,4 +1,4 @@
-#include "canvas.cpp"
+#include <canvas/canvas.hpp>
 
 int main(void) {
     using namespace std;
